@@ -1,20 +1,11 @@
-// let a =10;
-// let b=0;
-// setTimeout(() => {
-//    b=20 // drawback of asynchronous, value of b not getting update and its getting print only 10
-// }, 2000);
-// console.log(a+b);
+console.log("Starting up");
 
-//Promise Example
-let a=20;
-let b=0;
-let waitingData= new Promise((resolve, reject)=>{
 setTimeout(() => {
-    resolve(50)
+    console.log("execute after 2 second");
 }, 2000);
-})
 
-waitingData.then((data)=>{
-    b=data;
-    console.log(a+b);
-})
+setTimeout(() => {
+    console.log("execute after 0 second");
+}, 0);
+
+console.log("Finishig up")
