@@ -1,31 +1,8 @@
-// const test= require('./test')
-// console.log(test.name);
-// console.log(test.age);
+const colors = require('colors');
 
-// const fs =require('fs')
-// fs.writeFileSync("hello1.txt","Simple test file2");
-// console.log("-->",__dirname)
-// console.log("-->",__filename)
-// const fs = require('fs').writeFileSync;
-// fs("abc.txt", "abc file content");
-
-const http= require('http');
-
-
-http.createServer((req, res)=>{
-    res.write("<h1>Checking first message in header</h1>");
-res.end()
-}).listen(4000);
-
-
-
-
-
-
-
-
-
-
-
-
-
+console.log('greencolor'.green); // outputs green text
+console.log('i dont like cake and pies'.underline.red) // outputs red underlined text
+console.log('inverse the color'.inverse); // inverses the color
+console.log('OMG Rainbows!'.rainbow); // rainbow
+console.log('Run the trap'.trap); // Drops the bass
+console.log(10+2)
