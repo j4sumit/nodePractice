@@ -1,29 +1,10 @@
 const express = require('express');
+const path= require('path'); //to access foloder location
+console.log("dirname",__dirname); //C:\Users\j4sum\OneDrive\Desktop\nodePractice
+
 const app =express()
-app.get("",(req,res)=>{  
-res.send(`<h1>Welcome to Home page</h1>
-<a href="/about">Go to about Page</a>
-`)
-})
-
-app.get("/about",(req,res)=>{
-res.send(`
-<input type="text" placeholder="Enter some data here" value='${req.query.name}'/><br />
-<button>Submit</button>
-<a href="/">Go to Home Page</a>
-`)
-})
-
-app.get("/contact",(req,res)=>{
-    res.send([{
-        name:"Sumit",
-        email:"Sumit@gmail.com"
-    },
-    {
-        name:"Amit",
-        email:"Amit@gmail.com"
-    }
-])
-    })
+const publicPath=path.join(__dirname,"public")
+console.log("publicPath",publicPath); //C:\Users\j4sum\OneDrive\Desktop\nodePractice\public
+app.use(express.static(publicPath)) //Static method load static page
 
 app.listen(4000)
