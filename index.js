@@ -9,9 +9,14 @@ app.get("/profile",(req,res)=>{  //2
     const user={
         name:"Sumit",
         email:"sumit@gmail.com",
-        city:"Mumbai"
+        city:"Mumbai",
+        skills:["React", "JS", "Node","Angular","Bootstap"]
     }
     res.render('profile', {user})
+})
+
+app.get("/login",(req,res)=>{  //2
+     res.render('login')
 })
 
 
