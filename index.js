@@ -1,11 +1,15 @@
-console.log("Starting up");
+const express = require('express');
+const app =express()
+app.get("",(req,res)=>{
+res.send("hello, this is home page")
+})
 
-setTimeout(() => {
-    console.log("execute after 2 second");
-}, 2000);
+app.get("/about",(req,res)=>{
+res.send("This is about page")
+})
 
-setTimeout(() => {
-    console.log("execute after 0 second");
-}, 0);
+app.get("/contact",(req,res)=>{
+    res.send("This is contact page")
+    })
 
-console.log("Finishig up")
+app.listen(4000)
