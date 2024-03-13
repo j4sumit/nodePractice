@@ -1,36 +1,25 @@
 const express = require('express');
-const path= require('path'); //to access foloder location
-
 const app =express()
-const publicPath=path.join(__dirname,"public")
 
-app.set('view engine', "ejs");   //1
-app.get("/profile",(req,res)=>{  //2
-    const user={
-        name:"Sumit",
-        email:"sumit@gmail.com",
-        city:"Mumbai",
-        skills:["React", "JS", "Node","Angular","Bootstap"]
-    }
-    res.render('profile', {user})
-})
+const reqFilter=(req,res,next)=>{
+if(!req.query.age){
+ res.send("Please provide Age")   
+}
+else if(req.query.age<18){
+    res.send("you can not access this page")   
+   }
+   else{
+       next();
+   }
+}
 
-app.get("/login",(req,res)=>{  //2
-     res.render('login')
-})
+app.use(reqFilter);
 
-
-app.get("",(req,res)=>{
-    res.sendFile(`${publicPath}/index.html`)
+app.get("/",(req,res)=>{
+    res.send("Welcome to home page")
 })
-app.get("/aboutme",(req,res)=>{
-    res.sendFile(`${publicPath}/about.html`)
-})
-app.get("/help",(req,res)=>{
-    res.sendFile(`${publicPath}/help.html`)
-})
-app.get("*",(req,res)=>{
-    res.sendFile(`${publicPath}/pageNotfound.html`)
+app.get("/user",(req,res)=>{
+    res.send("Welcome to user page")
 })
 
 app.listen(4000)
