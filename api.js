@@ -1,6 +1,7 @@
 const express =require('express');
 const dbConnect=require("./mongodb")
 const app=express()
+const mongodb=require('mongodb')
 
 app.use(express.json())  //For Post purpose|| for getting data from request body/let result=await data.insertOne(req.body)
 
@@ -37,7 +38,12 @@ app.put("/:name",async(req,res)=>{
     res.send({result:"update"})
     })
 
-
+app.delete("/:id",async (req,res)=>{
+    console.log(req.params.id)
+    const data= await dbConnect()
+    const result=await data.deleteOne({_id:new mongodb.ObjectId(req.params.id)})
+res.send(result)
+})
 
 app.listen(5000);
 
