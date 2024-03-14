@@ -1,22 +1,17 @@
-const express = require('express');
-const reqFilter=require('./middleware')
-const app =express()
-const route = express.Router()
-route.use(reqFilter);
-// app.use(reqFilter);
+const {MongoClient}=require("mongodb")
+// const MongoClient=require("mondodb").MongoClient// both are same
 
-app.get("/",(req,res)=>{
-    res.send("Welcome to home page")
-})
-app.get("/user",reqFilter,(req,res)=>{  //Single routed or routed level middleware
-    res.send("Welcome to user page")
-})
-route.get("/about",(req,res)=>{
-    res.send("Welcome to about page")
-})
-route.get("/contact",(req,res)=>{
-    res.send("Welcome to contact page")
-})
+const url = "mongodb://127.0.0.1:27017"
+const database="SumitDatabase"
+const client =new MongoClient(url);
 
-app.use("/",route);
-app.listen(4000)
+async function getData(){
+    let result =await client.connect();
+    console.log('Connected successfully to server')
+    let db= result.db(database);
+    let collection= db.collection('mongodbpractice');
+    let response=await collection.find({}).toArray();
+    console.log("response",response)
+}
+
+getData();
