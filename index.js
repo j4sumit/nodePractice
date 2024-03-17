@@ -1,29 +1,27 @@
-const express =require('express')
-require('./config')
-const product=require('./product')
-const app=express()
-app.use(express.json())// to get req.body data
+const express = require("express");
+const EventEmitter = require("events"); // EventEmitter is a class
+const app =express();
+const event = new EventEmitter();
+let count =0;
 
-app.get("/search/:key",async (req,res)=>{
-     let key = req.params.key;
-    let ageQuery = {};
-
-    if (!isNaN(key)) {
-        ageQuery = { "age": parseInt(key) };// here we are checking if input is number then check in age column
-    }
-    console.log("key",key)
-    console.log("ageQuery",ageQuery)
-
-    let data = await product.find(
-        {
-            "$or":[
-                {"name":{$regex:req.params.key,$options: 'i'}},
-                {"state":{$regex:req.params.key, $options: 'i'}},
-                ageQuery
-            ]
-        }
-    )
-res.send(data);
+event.on("countAPI",()=>{
+    count++;
+    console.log("Event Called",count);
 })
 
-app.listen(5000)
+app.get("/",(req,res)=>{
+    res.send("api called");
+    event.emit("countAPI")
+})
+
+app.get("/search",(req,res)=>{
+    res.send("Search api called");
+    event.emit("countAPI")
+})
+
+app.get("/update",(req,res)=>{
+    res.send("update api called");
+    event.emit("countAPI")
+})
+
+app.listen(5000);
