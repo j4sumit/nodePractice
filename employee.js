@@ -35,4 +35,16 @@ const getEmployees =(req,res)=>{
         res.json({data:result.rows})
     })
 }
-module.exports ={createEmployee,getEmployees}
+
+const getEmployeesByID =(req,res)=>{
+    let id =parseInt(req.params.id)
+    pool.query("select * from emoployees where id=$1",[id],(err,result)=>{
+        if(err){
+            throw err;
+        }
+        res.json({data:result.rows})
+    })
+}
+
+
+module.exports ={createEmployee,getEmployees,getEmployeesByID}
