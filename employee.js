@@ -46,5 +46,41 @@ const getEmployeesByID =(req,res)=>{
     })
 }
 
+const updateEmp=(req,res)=>{
+    let id =parseInt(req.params.id)
+    const {name,email}=req.body
+    pool.query("update emoployees set name=$1, email=$2 where id=$3",[name,email,id],(err,result)=>{
+        if(err){
+            throw err;
+        }
+        res.json({
+            data:"updated successfully"
+        })
+    })
+}
 
-module.exports ={createEmployee,getEmployees,getEmployeesByID}
+const deleteEmp=(req,res)=>{
+    let id =parseInt(req.params.id)
+    pool.query("delete from emoployees where id=$1",[id],(err,result)=>{
+        if(err){
+            throw err;
+        }
+        res.json({
+            msg:`Employee with ${id} Deleted Successfully`
+        })
+    })
+}
+
+//search employees based on name or email
+const searchEmployees = (req, res) => {
+    let key = req.params.key;
+    pool.query("SELECT * FROM emoployees WHERE name ILIKE $1 OR email ILIKE $1", [`%${key}%`], (err, result) => {
+        if (err) {
+            console.error("errerrerrerr",err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+        res.json({ data: result.rows });
+    });
+};
+
+module.exports ={createEmployee,getEmployees,getEmployeesByID,updateEmp,deleteEmp,searchEmployees}
