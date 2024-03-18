@@ -1,27 +1,12 @@
-const express = require("express");
-const EventEmitter = require("events"); // EventEmitter is a class
-const app =express();
-const event = new EventEmitter();
-let count =0;
+const express = require('express');
+const app = express()
+const dotenv =require("dotenv");
+dotenv.config()
+const PORT =5000;
+const dbEmp = require("./employee")
 
-event.on("countAPI",()=>{
-    count++;
-    console.log("Event Called",count);
-})
+app.use(express.json());
+app.post("/add",dbEmp.createEmployee)
+app.get("/all",dbEmp.getEmployees)
 
-app.get("/",(req,res)=>{
-    res.send("api called");
-    event.emit("countAPI")
-})
-
-app.get("/search",(req,res)=>{
-    res.send("Search api called");
-    event.emit("countAPI")
-})
-
-app.get("/update",(req,res)=>{
-    res.send("update api called");
-    event.emit("countAPI")
-})
-
-app.listen(5000);
+app.listen(PORT, ()=> console.log(`server is running on ${PORT}`))
